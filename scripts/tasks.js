@@ -60,7 +60,6 @@ function generateBroadcastAndNetworsAddresses(ip, sMask ) {
 			check++;
 		}
 	}
-	console.log(check);
 	if(check != 4){
 		return 'Некоректный IP'
 	} else {
