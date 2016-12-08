@@ -48,21 +48,32 @@ function findSimilarWords(firstStr, secondStr){
 // 4) Дан IP-адрес (строка) и маска подсети (десятичное число). Написать функцию, которая будет валидировать
 // IP-адрес (4 октета, <= 255), а затем выводить сетевой и широковещательный адреса:
 
-var IpAddress = '10.256.98.2';
+var IpAddress = '10.223.98.2';
 var subnetMask = 28;
 console.log(generateBroadcastAndNetworsAddresses(IpAddress, subnetMask)); // Broadcast - 10.223.98.15, Network - 10.223.98.0
 
 function generateBroadcastAndNetworsAddresses(ip, sMask ) {
+	var check = 0;
  	var arrIp = ip.split('.');
-	var mask = Math.pow(2,8) - Math.pow(2,32 - sMask);
-	console.log(mask);
-	mask = mask.toString(2);
- 	var last = arrIp[3].toString(2);
-    arrIp[3] = last&mask;
-    console.log('Network -', arrIp.join('.'));
-    var brCast = arrIp;
-    brCast[3] = arrIp[3]+Math.pow(2,32 - sMask) - 1;
-  	return 'Broadcast - ' + brCast.join('.'); 
+ 	for(var i = 0; i < 4; i++){
+		if ( arrIp[i] <= 255){
+			check++;
+		}
+	}
+	console.log(check);
+	if(check != 4){
+		return 'Некоректный IP'
+	} else {
+		var mask = Math.pow(2,8) - Math.pow(2,32 - sMask);
+		mask = mask.toString(2);
+	 	var last = arrIp[3].toString(2);
+	    arrIp[3] = last&mask;
+	    console.log('Network -', arrIp.join('.'));
+	    var brCast = arrIp;
+	    brCast[3] = arrIp[3]+Math.pow(2,32 - sMask) - 1;
+	  	return 'Broadcast - ' + brCast.join('.'); 
+	}
+
 }
 
 // 5) Соединить все массивы в один, не допуская повторения элементов (порядок не важен):
